@@ -10,21 +10,23 @@
       text-align: center;
       font-size: 24px;
       line-height: 100px;
+      display: inline-block;
+      margin: 5px;
     }
   </style>
   <script>
     function rollDice() {
-      var randomNumber = Math.floor(Math.random() * 6) + 1;
-      var diceElement = document.getElementById("dice");
-     
-      // 주사위 눈 변경
-      diceElement.innerHTML = randomNumber;
+      const diceElement = document.getElementById("dice_group");
+      let randomNumber = Math.floor(Math.random() * 6) + 1;
+      let diceElements = diceElement.createElement("div");
+      diceElements.className("dice");
+      diceElements.textContent = randomNumber;
     }
   </script>
 </head>
 <body>
   <h1>주사위 게임</h1>
-  <div class="dice" id="dice">주사위</div>
-  <button onclick="rollDice()">주사위 6번 던지기</button>
+  <div id="dice_group">  </div>
+  <button onclick="rollDice()">주사위 6번던지기</button>
 </body>
 </html>
