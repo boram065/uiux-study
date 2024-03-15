@@ -16,12 +16,16 @@
   </style>
   <script>
     function rollDice() {
+      let arr = [];
       const diceElement = document.getElementById("dice_group");
-      let randomNumber = Math.floor(Math.random() * 6) + 1;
-      let diceElements = diceElement.createElement("div");
-      diceElements.className("dice");
-      diceElements.textContent = randomNumber;
-      diceElement.appendChild(diceElements);
+      for (let i = 0; i < 6; i++) {
+        let randomNumber = Math.floor(Math.random() * 6) + 1;
+        let randomDiv = `<div class="dice">${randomNumber}</div>`;
+        diceElement.innerHTML += randomDiv;
+
+        arr.push(randomNumber);
+      }
+      console.log(arr);
     }
   </script>
 </head>
