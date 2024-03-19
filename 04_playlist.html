@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>플레이리스트</title>
+</head>
+<script>
+    window.onload = init;
+    
+    function init() {
+        // 곡 추가 버튼
+        let addButton = document.getElementById('addButton');
+        addButton.onclick = hadleAddButtonClick;
+
+        let removeButton = document.getElementById('removeButton');
+        removeButton.onclick = function(e) {
+            removeAll();
+        };
+
+        // 저장되어 있는 곡이 있다면 불러오기
+        let button = document.getElementById('button');
+        button.onclick = function(e) {
+            loadPlayList();
+        }
+    }
+    
+    function hadleAddButtonClick() {
+        let songName = document.getElementById('songTextInput').value;
+        if(songName == "") {
+            alert("노래 제목을 입력해주세요.");
+        } else {
+            // localStorage에 저장
+            let playlistArray = getStoreArray("playlist");
+            playlistArray.push(songName);
+            localStorage.setItem('playlist', JSON.stringify(playlistArray));
+
+            // List에 추가
+            let ul = document.getElementById('playlist');
+            let li = document.createElement("li");
+            li.innerHTML = songName; // li 태그 안에 songName 텍스트 추가 <li> songName </li>
+            ul.appendChild(li); // ul 태그 안에 li 추가 <ul> <li></li> </ul>
+        }
+    }
+
+    function getStoreArray(key) {
+        let playlistArray = localStorage.getItem(key);
+        if(playlistArray == null || playlistArray == "") {
+            playlistArray = new Array();
+        } else {
+            playlistArray = JSON.parse(playlistArray);
+        }
+        return playlistArray;
+    }
+
+    function removeAll() {
+        if(confirm("모두 지우시겠습니까?")) {
+            // localStorage.clear();
+            let ul = document.getElementById('playlist');
+            ul.innerHTML = "";
+        }
+    }
+
+    function loadPlayList() {
+        let playlistArray = getStoreArray("playlist");
+        addSongList(playlistArray);
+    }
+
+    function addSongList(songList) {
+        // 작성해보기
+        let playList = localStorage.getItem(songList);
+        if(playList == null || playList == "") {
+            alert("저장된 곡이 없습니다.");
+        } else {
+            playList = JSON.parse(playList);
+        }
+        return playList.value;
+    }
+
+</script>
+<body>
+    <form>
+        <input type="text" id="songTextInput" size="40" placeholder="노래 제목">
+        <input type="button" id="addButton" size="40" value="곡 추가">
+        <input type="button" id="removeButton" size="40" value="곡 삭제">
+        <input type="button" id="button" size="40" value="곡 불러오기">
+    </form>
+    <div id="playlist" style="margin-top: 20px; margin-left: 20px;"></div>
+</body>
+</html>
