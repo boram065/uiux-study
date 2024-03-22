@@ -55,7 +55,7 @@
 
     function removeAll() {
         if(confirm("모두 지우시겠습니까?")) {
-            // localStorage.clear();
+            localStorage.clear();
             let ul = document.getElementById('playlist');
             ul.innerHTML = "";
         }
@@ -68,13 +68,12 @@
 
     function addSongList(songList) {
         // 작성해보기
-        let playList = localStorage.getItem(songList);
-        if(playList == null || playList == "") {
-            alert("저장된 곡이 없습니다.");
-        } else {
-            playList = JSON.parse(playList);
+        let ul = document.getElementById('playlist');
+        for(let i = 0; i < songList.length; i++) {
+            let li = document.createElement('li');
+            li.innerHTML = songList[i];
+            ul.appendChild(li);
         }
-        return playList.value;
     }
 
 </script>
